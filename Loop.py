@@ -1,4 +1,6 @@
 
+import urllib.request
+import _thread
 
 class Loop(object):
     """
@@ -22,6 +24,11 @@ class Loop(object):
     def __next__(self):
         self.print_curr()
         self.curr += 1
+        if self.curr % 1 == 0:
+            try:
+                _thread.start_new_thread(self.handle_loop, ())
+            except Exception:
+                print("Could not start new thread")
         return self.iterable.__next__()
 
     def print_curr(self):
@@ -30,3 +37,14 @@ class Loop(object):
         """
         num_bars = int(self.curr / self.len * self.ncols)
         print("x"*num_bars, end='\r')
+
+    def handle_loop(self):
+        """
+        Called for each n iterations.
+        """
+        try:
+            result = urllib.request.urlopen("https://docs.python.org/3/library/urllib.request.html")
+            print(result.info())
+        except urllib.error.URLError:
+            print("Could not find URL. Please check your internet connection.", end='\r')
+        """type is http.client.HTTPMessage"""

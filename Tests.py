@@ -1,9 +1,10 @@
 
 from Loop import Loop
 from time import sleep
-from Auth import config
 
-def test_loop():
+
+def test_loop(filename):
+    Loop.config(filename)
     bar = range(5)
     print("running loop")
     for i in Loop(bar):
@@ -12,4 +13,4 @@ def test_loop():
 
 
 if __name__ == '__main__':
-    config('Noah', '742')
+    test_loop('ngundotra.txt')
